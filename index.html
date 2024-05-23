@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch Study</title>
+  </head>
+  <body>
+    <h1>Fetch Study</h1>
+    <button onclick="fetchData()">发送GET请求</button>
+    <button onclick="postTest()">发送POST请求</button>
+    <button onclick="putTest()">发送PUT请求</button>
+    <button onclick="fetchDataWithParams()">发送带有参数的GET请求</button>
+    <button onclick="deleteTest()">发送DELTE请求带有参数</button>
+  </body>
+  <script>
+    async function fetchData() {
+      fetch("http://localhost:8080")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("网络返回请求错误");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("请求错误:", error);
+        });
+    }
+    async function postTest() {
+      console.log("发送POST请求");
+      fetch("http://localhost:8080", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "张三",
+          age: 20,
+          hobby: ["唱", "跳", "rap", "篮球"],
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("网络返回请求错误");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("请求错误:", error);
+        });
+    }
+    async function putTest() {
+      console.log("发送PUT请求");
+      fetch("http://localhost:8080", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "方大同",
+          age: 25,
+          hobby: ["吃饭", "睡觉", "薛凯琪"],
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("网络返回请求错误");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("请求错误:", error);
+        });
+    }
+    async function fetchDataWithParams() {
+      console.log("发送带有参数的GET请求");
+      const baseURL = "http://localhost:8080/p";
+      const params = new URLSearchParams({
+        name: "李四",
+        age: 22,
+        hobby: ["篮球", "足球", "乒乓球"],
+      });
+      const url = `${baseURL}?${params.toString()}`;
+
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("网络返回请求错误");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("请求错误:", error);
+        });
+    }
+    async function deleteTest() {
+      console.log("发送DELETE请求");
+      const baseURL = "http://localhost:8080";
+      const params = new URLSearchParams({
+        id: 2,
+      });
+      const url = `${baseURL}?${params.toString()}`;
+      fetch(url, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("网络返回请求错误");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("请求错误:", error);
+        });
+    }
+  </script>
+</html>
